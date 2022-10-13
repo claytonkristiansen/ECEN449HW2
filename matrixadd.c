@@ -28,7 +28,7 @@ void PrintMatrix(int rows, int cols, int **matrix)
     }
 }
 
-void AddMatrices(int rows, int cols, const int **matrix1, const int **matrix2, int **outputMatrix)
+void AddMatrices(int rows, int cols, int **matrix1, int **matrix2, int **outputMatrix)
 {
     for(int i = 0; i < rows; ++i)
     {
@@ -74,7 +74,7 @@ void RotateMatrixClockwise(int rows, int cols, int **matrix)
     }
 }
 
-int main(int argc, char *argv[])
+int main(void)
 {
     FILE *inA;
     FILE *inB;
@@ -83,6 +83,7 @@ int main(int argc, char *argv[])
     
     int **matrixA;
     int **matrixB;
+    int **sumMatrix;
 
     int aRows;
     int aCols;
@@ -117,10 +118,26 @@ int main(int argc, char *argv[])
         fscanf(inB, "\n");
     }
 
+    sumMatrix = (int **) malloc(aRows * sizeof(int *));
+    for(int i = 0; i < aRows; ++i)
+    {
+        sumMatrix[i] = (int *) malloc(aCols * sizeof(int));
+        for(int k = 0; k < aCols; ++k)
+        {
+            int num;
+            fscanf(inB, "%i", &num);
+            sumMatrix[i][k] = num;
+        }
+        fscanf(inB, "\n");
+    }
+    printf("Matrix A:\n");
     PrintMatrix(aRows, aCols, matrixA);
-
-    RotateMatrixClockwise(aRows, aCols, matrixA);
-    PrintMatrix(aRows, aCols, matrixA);
+    printf("\nMatrix B:\n");
+    PrintMatrix(bRows, bCols, matrixB);
+    AddMatrices(aRows, aCols, matrixA, matrixB, sumMatrix);
+    RotateMatrixClockwise(aRows, aCols, sumMatrix);
+    printf("\nSum and Rotated Matrix:\n");
+    PrintMatrix(aRows, aCols, sumMatrix);
 
     for(int i = 0; i < aRows; ++i)
     {
