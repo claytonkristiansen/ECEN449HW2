@@ -151,5 +151,8 @@ int main(void)
     }
     free(matrixB);
 
+    fclose(inA);
+    fclose(inB);
+
     return 0;
 }
